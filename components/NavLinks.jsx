@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { signIn, signOut } from "next-auth";
+import { signIn, signOut } from "next-auth/react";
 
 export const LogoLink = () => {
   return (

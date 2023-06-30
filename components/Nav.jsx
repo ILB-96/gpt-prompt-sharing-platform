@@ -1,13 +1,13 @@
 "use client";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { getProviders } from "next-auth";
+import { getProviders, useSession } from "next-auth/react";
 import Profile from "./Profile";
 import { LogoLink, NavLink, SignInButton, SignOutButton } from "./NavLinks";
 import NavDropdown from "./NavDropdown";
 
 const Nav = () => {
-  const isUserLoggedIn = true;
+  const { data: session } = useSession();
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
@@ -22,14 +22,16 @@ const Nav = () => {
   return (
     <nav className="flex-between w-full mb-17 pt-3">
       <LogoLink />
+
+      {/* {alert(providers)} */}
       {/* Desktop Navigation */}
       <div className="sm:flex hidden">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <NavLink endpoint="/create-prompt" />
             <SignOutButton />
             <Link href="/profile" className="flex gap-2">
-              <Profile />
+              <Profile avatar={session?.user.image} />
             </Link>
           </div>
         ) : (
@@ -38,9 +40,12 @@ const Nav = () => {
       </div>
       {/* Mobile Navigation */}
       <div className="sm:hidden flex relative">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex">
-            <Profile setToggleDropdown={setToggleDropdown} />
+            <Profile
+              avatar={session?.user.image}
+              setToggleDropdown={setToggleDropdown}
+            />
             <NavDropdown
               toggleDropdown={toggleDropdown}
               setToggleDropdown={setToggleDropdown}

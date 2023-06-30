@@ -1,9 +1,9 @@
 import Image from "next/image";
 
-const Profile = ({ setToggleDropdown }) => {
+const Profile = ({ setToggleDropdown, avatar }) => {
   return (
     <Image
-      src="/assets/images/logo.svg"
+      src={avatar}
       alt="User Profile"
       width={37}
       height={37}
