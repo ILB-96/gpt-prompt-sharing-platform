@@ -4,13 +4,13 @@ import { signIn, signOut } from "next-auth/react";
 
 export const LogoLink = () => {
   return (
-    <Link href="/" className="flex gap-2 flex-center">
+    <Link href="/" className="group flex gap-2 flex-center">
       <Image
         src="/assets/images/logo.svg"
         alt="Promptopia Logo"
         width={30}
         height={30}
-        className="object-contain"
+        className="object-contain group-hover:animate-spin"
       />
       <p className="logo_text">Promptopia</p>
     </Link>
@@ -53,7 +53,11 @@ export const SignOutButton = ({ setToggleDropdown }) => {
         signOut();
         setToggleDropdown ? setToggleDropdown(false) : null;
       }}
-      className={setToggleDropdown ? "mt-5 w-full " : "" + "black_btn"}
+      className={
+        setToggleDropdown
+          ? "border-t mt-5 pt-1 w-full transition duration-300 ease-in-out hover:text-red-500 hover:scale-105 "
+          : "" + "black_btn"
+      }
     >
       Sign Out
     </button>

@@ -1,15 +1,25 @@
-import Image from "next/image";
+import React from "react";
 
-const Profile = ({ setToggleDropdown, avatar }) => {
+import PromptCard from "@components/PromptCard";
+
+const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
   return (
-    <Image
-      src={avatar}
-      alt="User Profile"
-      width={37}
-      height={37}
-      className="rounded-full"
-      onClick={() => setToggleDropdown((prev) => !prev)}
-    />
+    <section className="w-full">
+      <h1 className="head_text text-left">
+        <span className="blue_gradient">{name} Profile</span>
+      </h1>
+      <p className="desc text-left">{desc}</p>
+      <div className="mt-10 prompt_layout">
+        {data.map((post) => (
+          <PromptCard
+            key={post._id}
+            post={post}
+            handleEdit={() => handleEdit(post)}
+            handleDelete={() => handleDelete(post)}
+          />
+        ))}
+      </div>
+    </section>
   );
 };
 
