@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
+import logger from "@utils/logger";
 import User from "@models/user";
 import { connectToDB } from "@utils/database";
 
@@ -33,7 +34,7 @@ const handler = NextAuth({
 
         return true;
       } catch (error) {
-        console.log(error);
+        logger.error(error);
         return false;
       }
     },

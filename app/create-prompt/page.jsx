@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
+import logger from "@utils/logger";
 import Form from "@components/Form";
 
 const CreatePrompt = () => {
@@ -32,7 +33,7 @@ const CreatePrompt = () => {
         router.push("/");
       }
     } catch (error) {
-      console.error(error);
+      logger.error(error);
     } finally {
       setSubmitting(false);
     }

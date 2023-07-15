@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
-
+import logger from "./logger.js";
 let isConnected = false;
 
 export const connectToDB = async () => {
   mongoose.set("strictQuery", true);
   if (isConnected) {
-    console.log("MongoDB is Connected");
+    logger.info("MongoDB is Connected");
     return;
   }
 
@@ -18,8 +18,8 @@ export const connectToDB = async () => {
 
     isConnected = true;
 
-    console.log("MongoDB connected");
+    logger.info("MongoDB is Connected");
   } catch (error) {
-    console.log(error);
+    logger.error(error);
   }
 };
