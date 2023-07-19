@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import Profile from "@components/Profile";
-import logger, { log } from "@utils/logger";
+import logger from "@utils/logger";
 
 const MyProfile = () => {
   const { data: session } = useSession();
@@ -24,6 +24,7 @@ const MyProfile = () => {
       fetchPosts();
     }
   }, [session?.user.id]);
+
   const handleEdit = (post) => {
     router.push(`/edit-prompt?id=${post._id}`);
   };
@@ -40,7 +41,7 @@ const MyProfile = () => {
       });
 
       if (res.ok) {
-        setPosts((prevPosts) => prevPosts.filter((p) => p._id !== post._id));
+        setPosts(posts.filter((p) => p._id !== post._id));
       } else {
         logger.error(res);
       }

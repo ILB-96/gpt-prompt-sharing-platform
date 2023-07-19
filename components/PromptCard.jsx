@@ -1,16 +1,15 @@
 "use client";
-
 import React, { useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
+
 import ProfileImage from "./ProfileImage";
 
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   const { data: session } = useSession();
-  const pathName = usePathname();
   const router = useRouter();
-
+  const pathName = usePathname();
   const [copied, setCopied] = useState("");
 
   const handleCopy = () => {
@@ -18,23 +17,33 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
     navigator.clipboard.writeText(post.prompt);
     setTimeout(() => setCopied(""), 3000);
   };
+
   return (
     <div className="prompt_card transition duration-300 ease-in-out hover:translate-y-1 hover:scale-105">
       <div className="flex justify-between items-start gap-5">
         <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
-          <ProfileImage avatar={post.creator.image} />
-
-          <div className="flex flex-col">
+          <button
+            onClick={() => router.push(`/profile/view?id=${post.creator._id}`)}
+          >
+            <ProfileImage avatar={post?.creator?.image} />
+          </button>
+          <button
+            className="flex flex-col"
+            onClick={() => router.push(`/profile/view?id=${post.creator._id}`)}
+          >
             <h3 className="font-satoshi font-semibold text-gray-900">
-              {post.creator.username}
+              {post?.creator?.username}
             </h3>
             <p className="font-inter text-sm text-gray-500">
-              {post.creator.email}
+              {post?.creator?.email}
             </p>
-          </div>
+          </button>
         </div>
 
-        <div className="copy_btn transition ease-in-out duration-300 hover:bg-blue-100" onClick={handleCopy}>
+        <div
+          className="copy_btn transition ease-in-out duration-300 hover:bg-blue-100"
+          onClick={handleCopy}
+        >
           <Image
             src={
               copied === post.prompt
@@ -49,13 +58,13 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
       </div>
 
       <p className="my-4 font-satoshi text-sm text-gray-700">{post.prompt}</p>
-      <p
+      <button
         className="font-inter text-sm blue_gradient"
         onClick={() => handleTagClick && handleTagClick(post.tag)}
       >
         {post.tag}
-      </p>
-      {session?.user.id === post.creator._id && pathName === "/profile" && (
+      </button>
+      {session?.user.id === post?.creator?._id && pathName === "/profile" && (
         <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
           <p
             className="font-inter text-sm green_gradient cursor-pointer"
